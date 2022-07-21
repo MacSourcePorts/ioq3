@@ -50,6 +50,7 @@ echo
 export MACOSX_DEPLOYMENT_TARGET="10.7"
 export MACOSX_DEPLOYMENT_TARGET_X86_64="$X86_64_MACOSX_VERSION_MIN"
 export MACOSX_DEPLOYMENT_TARGET_ARM64="$ARM64_MACOSX_VERSION_MIN"
+export MACOSX_BUNDLE_TYPE="universal2"
 
 if [ -d build/release-darwin-universal2 ]; then
 	rm -r build/release-darwin-universal2

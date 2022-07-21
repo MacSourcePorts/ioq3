@@ -571,10 +571,17 @@ ifeq ($(PLATFORM),darwin)
     # We copy sdlmain before ranlib'ing it so that subversion doesn't think
     #  the file has been modified by each build.
     LIBSDLMAIN=$(B)/libSDL2main.a
-    LIBSDLMAINSRC=$(LIBSDIR)/macosx/libSDL2main.a
-    CLIENT_LIBS += $(LIBSDIR)/macosx/libSDL2-2.0.0.dylib
-    RENDERER_LIBS += $(LIBSDIR)/macosx/libSDL2-2.0.0.dylib
-    CLIENT_EXTRA_FILES += $(LIBSDIR)/macosx/libSDL2-2.0.0.dylib
+  ifeq ($(findstring $(MACOSX_BUNDLE_TYPE),universal2),)
+      LIBSDLMAINSRC=$(LIBSDIR)/macosx-universal2/libSDL2main.a
+      CLIENT_LIBS += $(LIBSDIR)/macosx-universal2/libSDL2-2.0.0.dylib
+      RENDERER_LIBS += $(LIBSDIR)/macosx-universal2/libSDL2-2.0.0.dylib
+      CLIENT_EXTRA_FILES += $(LIBSDIR)/macosx-universal2/libSDL2-2.0.0.dylib
+    else
+      LIBSDLMAINSRC=$(LIBSDIR)/macosx-universal/libSDL2main.a
+      CLIENT_LIBS += $(LIBSDIR)/macosx-universal/libSDL2-2.0.0.dylib
+      RENDERER_LIBS += $(LIBSDIR)/macosx-universal/libSDL2-2.0.0.dylib
+      CLIENT_EXTRA_FILES += $(LIBSDIR)/macosx-universal/libSDL2-2.0.0.dylib
+    endif
   else
     BASE_CFLAGS += -I/Library/Frameworks/SDL2.framework/Headers
     CLIENT_LIBS += -framework SDL2
